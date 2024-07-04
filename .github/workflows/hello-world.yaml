@@ -1,0 +1,13 @@
+ name: hello-world
+
+on:
+  push:
+    branches:
+      - main  # This specifies that the workflow should run only when changes are pushed to the 'main' branch
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step
+        run: echo "Hello World!"
