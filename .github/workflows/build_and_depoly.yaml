@@ -66,9 +66,11 @@ jobs:
         run: |
           echo "type=sha,prefix=${{ env.prefix }},suffix=-${{ env.timestamp }}"
           echo "type=sha,prefix=${{ env.prefix }}"
+
+          # Remove the trailing hyphen from env.prefix using shell command and print it
+          prefix_without_hyphen="${{ env.prefix }}"
+          prefix_without_hyphen="${prefix_without_hyphen%"${prefix_without_hyphen##*[!'-]"}"}"  # Remove trailing '-'
           
-          # Remove the trailing hyphen from the prefix and print it
-          prefix_without_hyphen="${{ env.prefix%'-' }}"
           echo "type=raw,value=${prefix_without_hyphen}"
           
           echo "type=raw,value=latest"
