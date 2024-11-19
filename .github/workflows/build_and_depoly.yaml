@@ -40,14 +40,14 @@ jobs:
         id: prefix
         run: |
           if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "prefix=dev-" >> $GITHUB_ENV
+            echo "prefix=dev" >> $GITHUB_ENV
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             if [[ "${{ github.event.inputs.environment }}" == "DEV" ]]; then
-              echo "prefix=dev-" >> $GITHUB_ENV
+              echo "prefix=dev" >> $GITHUB_ENV
             elif [[ "${{ github.event.inputs.environment }}" == "QA" ]]; then
-              echo "prefix=qa-" >> $GITHUB_ENV
+              echo "prefix=qa" >> $GITHUB_ENV
             elif [[ "${{ github.event.inputs.environment }}" == "PROD" ]]; then
-              echo "prefix=prod-" >> $GITHUB_ENV
+              echo "prefix=prod" >> $GITHUB_ENV
             else
               echo "Invalid environment: ${{ github.event.inputs.environment }}"
               exit 1
