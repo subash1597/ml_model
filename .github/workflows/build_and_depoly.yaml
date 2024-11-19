@@ -11,9 +11,8 @@ on:
     branches:
       - main
     paths:
-      - 'pose_ai/**'
-      - '!pose_ai/tests/**'
-      - 'utils/**'
+      - 'static/**'
+      - 'templates/**'
 
   workflow_dispatch:
     inputs:
@@ -56,5 +55,8 @@ jobs:
           else
             echo "prefix=unknown-" >> $GITHUB_ENV
           fi
+
+       - name: Debugging - Print Prefix
+        run: echo "The determined prefix is: ${{ env.prefix }}"
 
   
