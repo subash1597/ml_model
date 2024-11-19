@@ -60,3 +60,10 @@ jobs:
       - name: Debugging - Print Prefix
         run: |
           echo "The determined prefix is: ${{ env.prefix }}"
+
+      - name: Print Values
+        run: |
+          echo "type=sha,prefix=${{ env.prefix }},suffix=-${{ env.timestamp }}"
+          echo "type=sha,prefix=${{ env.prefix }}"
+          echo "type=raw,value=dev"
+          echo "type=raw,value=latest"
