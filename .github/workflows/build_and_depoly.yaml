@@ -60,21 +60,11 @@ jobs:
         run: |
           echo "The determined prefix is: ${{ env.prefix }}"
 
-      # Character replacement to replace '-' with '_'
-      - name: Replace '-' with '_'
-        run: |
-          # Perform the replacement
-          prefix_with_underscore="${{ env.prefix//-/_ }}"
-          echo "Prefix after replacement: $prefix_with_underscore"
 
       # Print values with the updated prefix
       - name: Print Values
         run: |
           echo "type=sha,prefix=${{ env.prefix }},suffix=-${{ env.timestamp }}"
           echo "type=sha,prefix=${{ env.prefix }}"
-
-          # Print the modified prefix with underscores
           echo "type=raw,value=${{ env.prefix }}"
-          echo "type=raw,value=${prefix_with_underscore}"
-
           echo "type=raw,value=latest"
