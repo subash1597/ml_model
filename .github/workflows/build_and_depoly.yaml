@@ -1,0 +1,60 @@
+name: Build Server
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'static/**'
+      - 'templates/**'
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'pose_ai/**'
+      - '!pose_ai/tests/**'
+      - 'utils/**'
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Specify the deployment environment (DEV, QA, or PROD)"
+        required: true
+        default: DEV
+
+jobs:
+  build:
+    name: Build Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete cache
+        run: rm -rf $HOME/.cache
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Generate Timestamp
+        id: timestamp
+        run: echo "timestamp=$(date -u +%Y%m%dT%H%M%S)" >> $GITHUB_ENV
+
+      - name: Determine Prefix
+        id: prefix
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "prefix=dev-" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            if [[ "${{ github.event.inputs.environment }}" == "DEV" ]]; then
+              echo "prefix=dev-" >> $GITHUB_ENV
+            elif [[ "${{ github.event.inputs.environment }}" == "QA" ]]; then
+              echo "prefix=qa-" >> $GITHUB_ENV
+            elif [[ "${{ github.event.inputs.environment }}" == "PROD" ]]; then
+              echo "prefix=prod-" >> $GITHUB_ENV
+            else
+              echo "Invalid environment: ${{ github.event.inputs.environment }}"
+              exit 1
+            fi
+          else
+            echo "prefix=unknown-" >> $GITHUB_ENV
+          fi
+
+  
