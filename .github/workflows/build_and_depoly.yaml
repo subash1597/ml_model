@@ -56,7 +56,5 @@ jobs:
             echo "prefix=unknown-" >> $GITHUB_ENV
           fi
 
-       - name: Debugging - Print Prefix
+      - name: Debugging - Print Prefix
         run: echo "The determined prefix is: ${{ env.prefix }}"
-
-  
