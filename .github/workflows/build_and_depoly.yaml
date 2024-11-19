@@ -69,5 +69,4 @@ jobs:
           echo "type=raw,value=${{ env.prefix }}"
           echo "type=raw,value=latest"
           # Replace hyphen with '' and strip spaces, then echo
-          cleaned_prefix=$(echo "${{ env.prefix }}" | sed 's/-//g' | xargs)
-          echo "type=raw,value=${cleaned_prefix}"
+          echo "type=raw,value=$(echo "${{ env.prefix }}" | sed 's/-//g' | xargs)"
