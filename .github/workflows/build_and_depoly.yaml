@@ -56,15 +56,19 @@ jobs:
             echo "prefix=unknown-" >> $GITHUB_ENV
           fi
 
-      # Corrected Print Prefix step
+      # Debugging: Print Prefix
       - name: Debugging - Print Prefix
         run: |
           echo "The determined prefix is: ${{ env.prefix }}"
 
-  
+      # Print values with modified env.prefix (without the trailing "-")
       - name: Print Values
         run: |
-          type=sha,prefix=${{ env.prefix }},suffix=-${{ env.timestamp }}
-            type=sha,prefix=${{ env.prefix }}
-            type=raw,value=${{ env.prefix }}
-            type=raw,value=latest
+          echo "type=sha,prefix=${{ env.prefix }},suffix=-${{ env.timestamp }}"
+          echo "type=sha,prefix=${{ env.prefix }}"
+          
+          # Remove the trailing hyphen from the prefix and print it
+          prefix_without_hyphen="${{ env.prefix%'-' }}"
+          echo "type=raw,value=${prefix_without_hyphen}"
+          
+          echo "type=raw,value=latest"
